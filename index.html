@@ -22,7 +22,7 @@
     <main class="main-container main-layout">
 
         <header class="main-header main-layout flex justify-between align-center">
-            <img src="imgs/logo.png" class="logo" alt="LOGO">
+            <img src="imgs/LOGO.png" class="logo" alt="LOGO">
             <nav class="main-nav">
                 <ul class="clean-list flex">
                     <li><a class="nav-link focused flex justify-center align-center" href="#">Gallery</a></li>
@@ -60,7 +60,7 @@
 
             <!-- MEME EDITOR -->
 
-            <section class="meme-editor-container justify-around display-none">
+            <section class="meme-editor-container justify-around flex">
 
                 <!-- CANVAS -->
 
@@ -83,11 +83,11 @@
                     </div>
 
                     <div class="control-fonts">
-                        <button class="btn-control btn-font-bigger" onclick="onSetFontBigger()">Font +</button>
-                        <button class="btn-control btn-font-smaller" onclick="onSetFontSmaller()">Font -</button>
-                        <button class="btn-control btn-font-left" onclick="onSetAlignLeft()">Align Left</button>
-                        <button class="btn-control btn-font-center" onclick="onSetAlignCenter()">Align Center</button>
-                        <button class="btn-control btn-font-right" onclick="onSetAlignRight()">Align Right</button>
+                        <button class="btn-control btn-font-bigger" onclick="onSetFontSize(1)">Font +</button>
+                        <button class="btn-control btn-font-smaller" onclick="onSetFontSize(-1)">Font -</button>
+                        <button class="btn-control btn-font-left" onclick="onSetAlignText('start')">Align Left</button>
+                        <button class="btn-control btn-font-center" onclick="onSetAlignText('center')">Align Center</button>
+                        <button class="btn-control btn-font-right" onclick="onSetAlignText('end')">Align Right</button>
                         <select class="select-font-family" onchange="onSetFontFamily(this.value)">
                             <option value="impact">Impact</option>
                             <option value="arial">Arial</option>

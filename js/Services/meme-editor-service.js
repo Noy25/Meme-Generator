@@ -2,6 +2,23 @@
 
 let gMeme = null;
 
+function setAlignText(direction) {
+    gMeme.lines[gMeme.selectedLineIdx].align = direction;
+    switch (direction) {
+        case 'start':
+            gMeme.lines[gMeme.selectedLineIdx].pos.x = 20;
+            break;
+        case 'end':
+            gMeme.lines[gMeme.selectedLineIdx].pos.x = 480;
+            break;
+        case 'center':
+            gMeme.lines[gMeme.selectedLineIdx].pos.x = 250;
+            break;
+    }
+
+
+}
+
 function setFontFamily(fontFamily) {
     gMeme.lines[gMeme.selectedLineIdx].font = fontFamily;
 }
@@ -14,15 +31,20 @@ function setStrokeColor(color) {
     gMeme.lines[gMeme.selectedLineIdx].stroke = color;
 }
 
-function setFontSmaller() {
-    gMeme.lines[gMeme.selectedLineIdx].size--;
-}
-
-function setFontBigger() {
-    gMeme.lines[gMeme.selectedLineIdx].size++;
+function setFontSize(change) {
+    switch (change) {
+        case 1:
+            gMeme.lines[gMeme.selectedLineIdx].size++;
+            break;
+        case -1:
+            gMeme.lines[gMeme.selectedLineIdx].size--;
+            break;
+    }
+    console.log('gMeme.lines[gMeme.selectedLineIdx].size :', gMeme.lines[gMeme.selectedLineIdx].size);
 }
 
 function removeLine() {
+    if (gMeme.lines.length === 0) return;
     gMeme.lines.splice(gMeme.selectedLineIdx, 1);
     gMeme.selectedLineIdx = 0;
 }

@@ -5,9 +5,9 @@ let gCtx;
 
 
 function onInitEditor(elImg) {
-    document.querySelector('.gallery-container').classList.add('display-none');
-    document.querySelector('.meme-editor-container').classList.remove('display-none');
-    document.querySelector('.meme-editor-container').classList.add('flex');
+    // document.querySelector('.gallery-container').classList.add('display-none');
+    // document.querySelector('.meme-editor-container').classList.remove('display-none');
+    // document.querySelector('.meme-editor-container').classList.add('flex');
     initCanvas();
     createMeme(+elImg.id);
     renderMeme();
@@ -33,7 +33,7 @@ function renderMeme() {
 
 function drawText(lines, meme) {
 
-    lines.forEach(line => {
+    lines.forEach((line, idx) => {
         gCtx.font = `${line.size}px ${line.font}`;
         gCtx.textAlign = line.align;
         gCtx.fillStyle = line.fill;
@@ -41,27 +41,36 @@ function drawText(lines, meme) {
         gCtx.lineWidth = 1;
         gCtx.strokeStyle = line.stroke;
         gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
-    })
-
-    markSelectedLine(meme.lines[meme.selectedLineIdx]);
+        if (idx === meme.selectedLineIdx) {
+            markSelectedLine(meme.lines[meme.selectedLineIdx]);
+        };
+    });
+    
 }
 
 function markSelectedLine(line) {
     let height = line.size;
-    let width;
+    let width = gCtx.measureText(line.txt).width;;
     let xStart;
     let yStart;
     let xEnd;
     let yEnd;
 
     if (line.align === 'center') {
-        width = gCtx.measureText(line.txt).width;
-        // console.log(width)
         xStart = line.pos.x - (width / 2) - 5;
         yStart = line.pos.y + 10;
         xEnd = width + 10;
         yEnd = -height - 10;
-        // console.log('xStart', xStart, 'yStart', yStart, 'xEnd', xEnd, 'yEnd', yEnd);
+    } else if (line.align === 'start') {
+        xStart = line.pos.x - 5;
+        yStart = line.pos.y + 10;
+        xEnd = width + 10;
+        yEnd = -height - 10;
+    } else {
+        xStart = line.pos.x - width - 5;
+        yStart = line.pos.y + 10;
+        xEnd = width + 10;
+        yEnd = -height - 10;
     }
 
     gCtx.beginPath();
@@ -70,6 +79,11 @@ function markSelectedLine(line) {
     gCtx.strokeStyle = 'red';
     gCtx.stroke();
     gCtx.closePath();
+}
+
+function onSetAlignText(direction) {
+    setAlignText(direction);
+    renderMeme();
 }
 
 function onSetFontFamily(fontFamily) {
@@ -87,14 +101,10 @@ function onSetStrokeColor(color) {
     renderMeme();
 }
 
-function onSetFontSmaller() {
-    setFontSmaller();
+function onSetFontSize(change) {
+    setFontSize(change);
     renderMeme();
-}
 
-function onSetFontBigger() {
-    setFontBigger();
-    renderMeme();
 }
 
 function onRemoveLine() {
@@ -110,8 +120,7 @@ function onAddLine() {
 function onSwitchLine() {
     switchLine();
     updateTextInput();
-    const meme = getMeme();
-    
+    renderMeme();
 }
 
 function onSetLineTxt(txt) {
