@@ -1,0 +1,294 @@
+/*********** BASICS ***********/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+html {
+    font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 1em;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    background-color: #22252C;
+    overflow-x: hidden;
+}
+
+input {
+    border: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: .8;
+}
+
+button:active {
+    transform: scale(.95);
+}
+
+/*********** HELPERS ***********/
+
+.main-layout {
+    max-width: 1260px;
+    margin: auto;
+}
+
+.clean-list {
+    list-style-type: none;
+}
+
+.display-none {
+    display: none;
+}
+
+/* FLEX */
+
+.flex {
+    display: flex;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-around {
+    justify-content: space-around;
+}
+
+.justify-even {
+    justify-content: space-evenly;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.align-start {
+    align-items: start;
+}
+
+/*********** MAIN CONTAINER ***********/
+
+.main-container {
+    margin-top: 20px;
+    border-radius: 40px;
+}
+
+/****** HEADER ******/
+
+.main-header {
+    height: 75px;
+    padding: 5px 80px;
+    border-radius: 40px;
+    background-image: linear-gradient(to right, #0F9BB3, #30BB73);
+    box-shadow: #161616 0 0 10px 3px;
+}
+
+.logo {
+    width: 150px;
+}
+
+.nav-link {
+    text-decoration: none;
+    height: 40px;
+    width: 120px;
+    border-radius: 20px;
+    font-size: 1.375rem;
+}
+
+.nav-link:hover {
+    color: #21AC91;
+    background-color: #FEFEFE;
+}
+
+.nav-link.focused {
+    color: #21AC91;
+    background-color: #FEFEFE;
+}
+
+/****** MAIN CONTENT ******/
+
+.main-content {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #383B42;
+    box-shadow: #161616 0 0 10px 3px;
+}
+
+/*** GALLERY SECTION ***/
+
+/* section.gallery-container { */
+/* } */
+
+.search-bar, .keywords-bar {
+    height: 60px;
+    width: 540px;
+    border-radius: 30px;
+}
+
+.search-bar {
+    background-color: #22252C;
+}
+
+.search-input {
+    height: 100%;
+    width: 85%;
+    display: block;
+    margin: auto;
+    font-size: 1.3rem;
+    background-color: inherit;
+}
+
+.keywords-bar {
+    background-color: #87898D;
+}
+
+.keywords-container {
+    height: 100%;
+    width: 95%;
+    margin: auto;
+}
+
+.keyword {
+    text-transform: capitalize;
+}
+
+.keyword:hover {
+    cursor: pointer;
+    text-shadow: 0px 0px 5px white;
+    transform: scale(1.2);
+}
+
+.btn-more-keywords {
+    height: 40px;
+    width: 100px;
+    border-radius: 50px;
+    background-image: linear-gradient(to right, #0F9BB3, #30BB73);
+    font-size: 1.125rem;
+}
+
+.gallery {
+    margin-top: 40px;
+}
+
+.meme-img {
+    width: 200px;
+    margin: 0 15px 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px 2px #161616;
+
+    transition: transform .3s, box-shadow .3s;
+}
+
+.meme-img:hover {
+    cursor: pointer;
+    box-shadow: 0 0 15px 5px white;
+    transform: scale(1.1);
+}
+
+/*** MEME EDITOR SECTION ***/
+
+/* .meme-editor-container { */
+/* } */
+
+/* CANVAS */
+
+.canvas-container {
+    height: 500px;
+    width: 500px;
+}
+
+canvas {
+    height: 500px;
+    width: 500px;
+    border-radius: 10px;
+    background-color: beige;
+}
+
+/* CONTROL PANEL */
+
+.control-panel {
+    height: 500px;
+    width: 500px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: cadetblue;
+}
+
+.text-bar {
+    height: 60px;
+    width: 450px;
+    border-radius: 30px;
+    background-color: #EBEEF3;
+}
+
+.text-line-input {
+    height: 100%;
+    width: 90%;
+    border-radius: 30px;
+    display: block;
+    margin: auto;
+    color: black;
+    background-color: inherit;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.btn-control {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+}
+
+.btn-add-line {
+    background-color: #39BF4E;
+}
+
+.btn-remove-line {
+    background-color: #E94536;
+}
+
+.btn-switch-line {
+    background-color: #42B2CF;
+}
+
+.control-fonts > * , .select-font-family > * {
+    color: black;
+}
+
+input[type="color"] {
+    height: -webkit-fill-available;
+    content-visibility: hidden;
+    border-radius: inherit;
+}

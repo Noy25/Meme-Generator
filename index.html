@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+
+<body onload="onInitGallery()">
+
+    <main class="main-container main-layout">
+
+        <header class="main-header main-layout flex justify-between align-center">
+            <img src="imgs/logo.png" class="logo" alt="LOGO">
+            <nav class="main-nav">
+                <ul class="clean-list flex">
+                    <li><a class="nav-link focused flex justify-center align-center" href="#">Gallery</a></li>
+                    <li><a class="nav-link flex justify-center align-center" href="#">About</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main-content main-layout">
+
+            <!-- GALLERY -->
+
+            <section class="gallery-container">
+
+                <nav class="search-nav flex justify-around align-center">
+
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="Search" oninput="renderImages(this.value)">
+                    </div>
+
+                    <div class="keywords-bar">
+                        <div class="keywords-container flex justify-even align-center">
+                        </div>
+                    </div>
+
+                    <button class="btn-more-keywords">More</button>
+
+                </nav>
+
+                <div class="gallery main-layout flex wrap justify-center ">
+
+                </div>
+
+            </section>
+
+            <!-- MEME EDITOR -->
+
+            <section class="meme-editor-container justify-around display-none">
+
+                <!-- CANVAS -->
+
+                <div class="canvas-container">
+                    <canvas></canvas>
+                </div>
+
+                <!-- EDITOR -->
+
+                <div class="control-panel flex column align-center">
+
+                    <div class="text-bar">
+                        <input type="text" class="text-line-input" oninput="onSetLineTxt(this.value)">
+                    </div>
+
+                    <div class="control-basics">
+                        <button class="btn-control btn-switch-line" onclick="onSwitchLine()"><i class="fas fa-long-arrow-alt-up fa-2x"></i><i class="fas fa-long-arrow-alt-down fa-2x"></i></button>
+                        <button class="btn-control btn-add-line" onclick="onAddLine()"><i class="fas fa-plus fa-2x"></i></button>
+                        <button class="btn-control btn-remove-line" onclick="onRemoveLine()"><i class="fas fa-trash fa-2x"></i></button>
+                    </div>
+
+                    <div class="control-fonts">
+                        <button class="btn-control btn-font-bigger" onclick="onSetFontBigger()">Font +</button>
+                        <button class="btn-control btn-font-smaller" onclick="onSetFontSmaller()">Font -</button>
+                        <button class="btn-control btn-font-left" onclick="onSetAlignLeft()">Align Left</button>
+                        <button class="btn-control btn-font-center" onclick="onSetAlignCenter()">Align Center</button>
+                        <button class="btn-control btn-font-right" onclick="onSetAlignRight()">Align Right</button>
+                        <select class="select-font-family" onchange="onSetFontFamily(this.value)">
+                            <option value="impact">Impact</option>
+                            <option value="arial">Arial</option>
+                            <option value="lucida sans">Lucida Sans</option>
+                            <option value="verdana">Verdana</option>
+                            <option value="times new roman">Times New Roman</option>
+                            <option value="georgia">Georgia</option>
+                        </select>
+                        <button class="btn-control btn-font-stroke"><input type="color" oninput="onSetStrokeColor(this.value)"></button>
+                        <button class="btn-control btn-font-fill"><input type="color" oninput="onSetFillColor(this.value)"></button>
+                    </div>
+
+                    <div class="control-stickers">
+
+                    </div>
+
+                    <div class="control-sharing">
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+
+    </main>
+
+    <script src="js/utils.js"></script>
+    <script src="js/Services/storage-service.js"></script>
+    <script src="js/Services/image-gallery-service.js"></script>
+    <script src="js/Controllers/image-gallery-controller.js"></script>
+    <script src="js/Services/meme-editor-service.js"></script>
+    <script src="js/Controllers/meme-editor-controller.js"></script>
+
+</body>
+
+</html>

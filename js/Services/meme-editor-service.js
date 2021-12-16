@@ -1,0 +1,81 @@
+'use strict'
+
+let gMeme = null;
+
+function setFontFamily(fontFamily) {
+    gMeme.lines[gMeme.selectedLineIdx].font = fontFamily;
+}
+
+function setFillColor(color) {
+    gMeme.lines[gMeme.selectedLineIdx].fill = color;
+}
+
+function setStrokeColor(color) {
+    gMeme.lines[gMeme.selectedLineIdx].stroke = color;
+}
+
+function setFontSmaller() {
+    gMeme.lines[gMeme.selectedLineIdx].size--;
+}
+
+function setFontBigger() {
+    gMeme.lines[gMeme.selectedLineIdx].size++;
+}
+
+function removeLine() {
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1);
+    gMeme.selectedLineIdx = 0;
+}
+
+function addLine() {
+    gMeme.lines.push({
+        txt: 'Enter your text here',
+        font: 'impact',
+        size: 40,
+        align: 'center',
+        fill: 'white',
+        stroke: 'black',
+        pos: { x: 250, y: 250 }
+    })
+    gMeme.selectedLineIdx = gMeme.lines.length - 1;
+}
+
+function switchLine() {
+    // The maximum line idx is lines.lengh - 1
+    gMeme.selectedLineIdx = (gMeme.selectedLineIdx === gMeme.lines.length - 1) ? 0 : gMeme.selectedLineIdx + 1;
+}
+
+function setLineTxt(txt) {
+    gMeme.lines[gMeme.selectedLineIdx].txt = txt;
+}
+
+function getMeme() {
+    return gMeme;
+}
+
+function createMeme(selectedImgId) {
+    gMeme = {
+        selectedImgId,
+        selectedLineIdx: 0,
+        lines: [
+            {
+                txt: 'Enter your text here',
+                font: 'impact',
+                size: 40,
+                align: 'center',
+                fill: 'white',
+                stroke: 'black',
+                pos: { x: 250, y: 50 }
+            },
+            {
+                txt: 'Enter your text here',
+                font: 'impact',
+                size: 40,
+                align: 'center',
+                fill: 'white',
+                stroke: 'black',
+                pos: { x: 250, y: 450 }
+            }
+        ]
+    }
+}
