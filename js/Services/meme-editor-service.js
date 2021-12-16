@@ -2,6 +2,10 @@
 
 let gMeme = null;
 
+function setLineBoundaries(xStart, yStart, xEnd, yEnd, idx) {
+    gMeme.lines[idx].boundaries = { xStart, xEnd: xStart + xEnd, yStart, yEnd: yStart + yEnd };
+}
+
 function setAlignText(direction) {
     gMeme.lines[gMeme.selectedLineIdx].align = direction;
     switch (direction) {
@@ -62,9 +66,12 @@ function addLine() {
     gMeme.selectedLineIdx = gMeme.lines.length - 1;
 }
 
-function switchLine() {
-    // The maximum line idx is lines.lengh - 1
-    gMeme.selectedLineIdx = (gMeme.selectedLineIdx === gMeme.lines.length - 1) ? 0 : gMeme.selectedLineIdx + 1;
+function switchLine(idx) {
+    if (idx >= 0) {
+        gMeme.selectedLineIdx = idx;
+    } else {
+        gMeme.selectedLineIdx = (gMeme.selectedLineIdx === gMeme.lines.length - 1) ? 0 : gMeme.selectedLineIdx + 1;
+    }
 }
 
 function setLineTxt(txt) {
