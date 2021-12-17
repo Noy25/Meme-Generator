@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meme Generator</title>
+    <link rel="icon" type="image/x-icon" href="imgs/favicon.ico">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +26,7 @@
             <img src="imgs/LOGO.png" class="logo" alt="LOGO">
             <nav class="main-nav">
                 <ul class="clean-list flex">
-                    <li><a class="nav-link focused flex justify-center align-center" href="#">Gallery</a></li>
+                    <li><a class="nav-link gallery-link focused flex justify-center align-center" href="" onclick="refreshPage()">Gallery</a></li>
                     <li><a class="nav-link flex justify-center align-center" href="#">About</a></li>
                 </ul>
             </nav>
@@ -84,6 +85,7 @@
                     </div>
 
                     <div class="control-fonts flex wrap justify-between">
+                        
                         <button class="btn-control btn-font-bigger" onclick="onSetFontSize(1)">Font +</button>
                         <button class="btn-control btn-font-smaller" onclick="onSetFontSize(-1)">Font -</button>
                         <button class="btn-control btn-font-left" onclick="onSetAlignText('start')"><i class="fas fa-align-left fa-2x"></i></button>
@@ -112,15 +114,17 @@
                     </div>
 
                     <div class="control-sharing flex justify-between">
-                        <a class="btn-control btn-share" onclick="shareToFacebook()">
+
+                        <a class="btn-control btn-share" onclick="shareToFacebook(this)">
                             <span>Share</span>
                             <i class="fas fa-share-alt"></i>
                             <i class="fab fa-facebook"></i>
                         </a>
-                        <button class="btn-control btn-download">
+                        <a class="btn-control btn-download" onclick="downloadCanvas(this)">
+                            <span>Download</span>
                             <i class="fas fa-download"></i>
-                            Download
-                        </button>
+                        </a>
+
                     </div>
 
                 </div>

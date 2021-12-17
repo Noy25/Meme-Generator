@@ -1,24 +1,29 @@
 'use strict'
 
+const gTouchEvs = ['touchstart', 'touchmove', 'touchend'];
+
 let gElCanvas;
 let gCtx;
-
-const gTouchEvs = ['touchstart', 'touchmove', 'touchend'];
 let gStartPos;
 
 
 function onInitEditor(elImg) {
-    document.querySelector('.gallery-container').classList.add('display-none');
-    document.querySelector('.meme-editor-container').classList.remove('display-none');
-    document.querySelector('.meme-editor-container').classList.add('flex');
+    hideGallery();
+    showEditor();
     initCanvas();
     createMeme(+elImg.id);
     renderMeme();
 }
 
+function showEditor() {
+    document.querySelector('.meme-editor-container').classList.remove('display-none');
+    document.querySelector('.meme-editor-container').classList.add('flex');
+}
+
 function initCanvas() {
     gElCanvas = document.querySelector('canvas');
-    resizeCanvas();
+    gElCanvas.width = 500;
+    gElCanvas.height = 500;
     gCtx = gElCanvas.getContext('2d');
     addListeners();
 }
@@ -33,6 +38,12 @@ function renderMeme() {
     updateTextInput();
 
     drawText(lines, meme);
+}
+
+function updateTextInput() {
+    const meme = getMeme();
+    const txt = (meme.lines.length) ? meme.lines[meme.selectedLineIdx].txt : 'Press the "+" button to add a new line';
+    document.querySelector('input[class="text-line-input"]').value = txt;
 }
 
 function drawText(lines, meme) {
@@ -121,25 +132,6 @@ function onSetLineTxt(txt) {
     setLineTxt(txt);
     renderMeme();
 }
-
-function updateTextInput() {
-    const meme = getMeme();
-    const txt = (meme.lines.length) ? meme.lines[meme.selectedLineIdx].txt : 'Press the "+" button to add a new line';
-    document.querySelector('input[class="text-line-input"]').value = txt;
-}
-
-// TO BE DELETED LATER
-function resizeCanvas() {
-    gElCanvas.width = 500;
-    gElCanvas.height = 500;
-}
-
-// CHANGE LATER :
-//   function resizeCanvas() {
-//     const elCanvasContainer = document.querySelector('.canvas-container');
-//     gElCanvas.width = elCanvasContainer.offsetWidth;
-//     gElCanvas.height = elCanvasContainer.offsetHeight;
-// }
 
 ////////// MOUSE & TOUCH EVENTS //////////
 

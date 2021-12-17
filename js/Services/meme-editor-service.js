@@ -2,29 +2,19 @@
 
 let gMeme = null;
 
-function moveLine(dx, dy) {
-    gMeme.lines[gMeme.selectedLineIdx].pos.x += dx;
-    gMeme.lines[gMeme.selectedLineIdx].pos.y += dy;
-}
+function downloadCanvas(elLink) {
+    const data = gElCanvas.toDataURL();
+    elLink.href = data;
+    elLink.download = 'my-meme';
+  }
 
-function isLineClicked(pos) {
-    return gMeme.lines.findIndex(line => {
-        const { xStart, xEnd, yStart, yEnd } = line.boundaries;
-        return ((pos.offsetX >= xStart && pos.offsetX <= xEnd) && (pos.offsetY >= yStart && pos.offsetY <= yEnd));
-    });
-}
-
-function toggleLineIsDrag(shouldDrag) {
-    gMeme.lines[gMeme.selectedLineIdx].isDrag = shouldDrag;
-}
-
-function shareToFacebook() {
+function shareToFacebook(elLink) {
     const imgDataUrl = gElCanvas.toDataURL();
     console.log(gElCanvas);
     // A function to be called if request succeeds
     function onSuccess(uploadedImgUrl) {
         const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl)
-        document.querySelector('a.btn-share').href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}" title="Share on Facebook" target="_blank">`;
+        elLink.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}" title="Share on Facebook" target="_blank">`;
 
         // window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}`);
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}`);
@@ -48,10 +38,6 @@ function doUploadImg(imgDataUrl, onSuccess) {
         .catch((err) => {
             console.error(err)
         })
-}
-
-function setLineBoundaries(xStart, yStart, xEnd, yEnd, idx) {
-    gMeme.lines[idx].boundaries = { xStart, xEnd: xStart + xEnd, yStart, yEnd: yStart + yEnd };
 }
 
 function setAlignText(direction) {
@@ -127,6 +113,22 @@ function switchLine(idx) {
     }
 }
 
+function moveLine(dx, dy) {
+    gMeme.lines[gMeme.selectedLineIdx].pos.x += dx;
+    gMeme.lines[gMeme.selectedLineIdx].pos.y += dy;
+}
+
+function isLineClicked(pos) {
+    return gMeme.lines.findIndex(line => {
+        const { xStart, xEnd, yStart, yEnd } = line.boundaries;
+        return ((pos.offsetX >= xStart && pos.offsetX <= xEnd) && (pos.offsetY >= yStart && pos.offsetY <= yEnd));
+    });
+}
+
+function toggleLineIsDrag(shouldDrag) {
+    gMeme.lines[gMeme.selectedLineIdx].isDrag = shouldDrag;
+}
+
 function setIsLineSelected(shouldMark) {
     gMeme.isLineSelected = shouldMark;
 }
@@ -141,6 +143,10 @@ function getLine() {
 
 function getMeme() {
     return gMeme;
+}
+
+function setLineBoundaries(xStart, yStart, xEnd, yEnd, idx) {
+    gMeme.lines[idx].boundaries = { xStart, xEnd: xStart + xEnd, yStart, yEnd: yStart + yEnd };
 }
 
 function createMeme(selectedImgId) {

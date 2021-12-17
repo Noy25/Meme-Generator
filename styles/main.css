@@ -196,7 +196,7 @@ section.gallery-container {
 .keyword:hover {
     cursor: pointer;
     text-shadow: 0px 0px 5px white;
-    transform: scale(1.2);
+    /* transform: scale(1.2); */
 }
 
 .btn-more-keywords {
@@ -227,10 +227,6 @@ section.gallery-container {
 }
 
 /*** MEME EDITOR SECTION ***/
-
-/* .meme-editor-container { */
-/* } */
-
 /* CANVAS */
 
 .canvas-container {
@@ -369,7 +365,7 @@ input[type="color"] {
     right: 20%;
 }
 
-.btn-share span {
+.btn-share span, .btn-download span {
     position: absolute;
     top: 50%;
     left: 50%;

@@ -1,8 +1,17 @@
 'use strict'
 
+function refreshPage() {
+    window.location.reload();
+}
+
 function onInitGallery() {
     renderImages();
     renderKeywords();
+}
+
+function hideGallery() {
+    document.querySelector('.gallery-container').classList.add('display-none');
+    document.querySelector('.gallery-link').classList.remove('focused');
 }
 
 function renderKeywords() {
