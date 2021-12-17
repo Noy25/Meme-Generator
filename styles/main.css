@@ -17,10 +17,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-    height: 100vh;
-    width: 100vw;
     background-color: #22252C;
-    overflow-x: hidden;
 }
 
 input {
@@ -250,9 +247,14 @@ section.gallery-container {
 /*** MEME EDITOR SECTION ***/
 /* CANVAS */
 
-canvas {
+.canvas-container {
     height: 480px;
     width: 480px;
+}
+
+canvas {
+    /* height: 480px; */
+    /* width: 480px; */
     border-radius: 10px;
     background-color: beige;
     cursor: grab;
@@ -261,7 +263,6 @@ canvas {
 /* CONTROL PANEL */
 
 .control-panel {
-    height: 480px;
     width: 480px;
     padding: 20px;
     border-radius: 10px;
@@ -434,6 +435,7 @@ input[type="color"] {
     .meme-editor-container {
         flex-direction: column;
         align-items: center;
+        gap: 20px;
     }
 }
 
@@ -476,6 +478,19 @@ input[type="color"] {
     }
     .search-bar, .keywords-bar {
         width: 360px;
+    }
+    .canvas-container {
+        height: 400px;
+        width: 400px;
+    }
+    .control-panel {
+        width: 400px;
+    }
+    .text-bar, .control-fonts, .control-sharing {
+        width: 380px;
+    }
+    .btn-share, .btn-download {
+        width: 150px;
     }
 }
 

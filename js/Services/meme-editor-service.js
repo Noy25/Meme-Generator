@@ -1,6 +1,8 @@
 'use strict'
 
 let gMeme = null;
+let gCanvasWidth;
+let gCanvasHeight;
 
 function downloadCanvas(elLink) {
     // Clean rectangles on canvas
@@ -105,7 +107,7 @@ function addLine() {
         align: 'center',
         fill: 'white',
         stroke: 'black',
-        pos: { x: 250, y: 250 },
+        pos: { x: gCanvasWidth / 2, y: gCanvasHeight / 2 },
         isDrag: false
     })
     gMeme.selectedLineIdx = gMeme.lines.length - 1;
@@ -156,6 +158,17 @@ function setLineBoundaries(xStart, yStart, xEnd, yEnd, idx) {
     gMeme.lines[idx].boundaries = { xStart, xEnd: xStart + xEnd, yStart, yEnd: yStart + yEnd };
 }
 
+function setCanvasMetrics() {
+    gCanvasWidth = gElCanvas.width;
+    gCanvasHeight = gElCanvas.height;
+    if (gMeme) {
+        gMeme.lines.forEach(line => {
+            line.pos.x = gCanvasWidth / 2;
+            line.pos.y = gCanvasHeight / 2;
+        });
+    }
+}
+
 function createMeme(selectedImgId) {
     gMeme = {
         selectedImgId,
@@ -169,7 +182,7 @@ function createMeme(selectedImgId) {
                 align: 'center',
                 fill: 'white',
                 stroke: 'black',
-                pos: { x: 250, y: 50 },
+                pos: { x: gCanvasWidth / 2, y: gCanvasHeight * 0.15 },
                 isDrag: false
             },
             {
@@ -179,7 +192,7 @@ function createMeme(selectedImgId) {
                 align: 'center',
                 fill: 'white',
                 stroke: 'black',
-                pos: { x: 250, y: 450 },
+                pos: { x: gCanvasWidth / 2, y: gCanvasHeight * 0.9 },
                 isDrag: false
             }
         ]

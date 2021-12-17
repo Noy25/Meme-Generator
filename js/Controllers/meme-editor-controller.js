@@ -18,15 +18,20 @@ function onInitEditor(elImg) {
 function showEditor() {
     document.querySelector('.meme-editor-container').classList.remove('display-none');
     document.querySelector('.meme-editor-container').classList.add('flex');
-    document.body.style.overflow = 'hidden';
 }
 
 function initCanvas() {
     gElCanvas = document.querySelector('canvas');
-    gElCanvas.width = 480;
-    gElCanvas.height = 480;
+    resizeCanvas();
     gCtx = gElCanvas.getContext('2d');
     addListeners();
+}
+
+function resizeCanvas() {
+    const elContainer = document.querySelector('.canvas-container');
+    gElCanvas.width = elContainer.offsetWidth;
+    gElCanvas.height = elContainer.offsetHeight;
+    setCanvasMetrics();
 }
 
 function renderMeme() {
@@ -139,6 +144,11 @@ function onSetLineTxt(txt) {
 function addListeners() {
     addMouseListeners();
     addTouchListeners();
+        
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        renderMeme();
+      });
 }
 
 function addMouseListeners() {
