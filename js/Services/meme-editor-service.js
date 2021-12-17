@@ -67,6 +67,7 @@ function addLine() {
 }
 
 function switchLine(idx) {
+    gMeme.shouldMarkText = true;
     if (idx >= 0) {
         gMeme.selectedLineIdx = idx;
     } else {
@@ -86,6 +87,7 @@ function createMeme(selectedImgId) {
     gMeme = {
         selectedImgId,
         selectedLineIdx: 0,
+        shouldMarkText: true,
         lines: [
             {
                 txt: 'Enter your text here',

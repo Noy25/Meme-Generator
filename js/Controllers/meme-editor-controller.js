@@ -5,9 +5,9 @@ let gCtx;
 
 
 function onInitEditor(elImg) {
-    // document.querySelector('.gallery-container').classList.add('display-none');
-    // document.querySelector('.meme-editor-container').classList.remove('display-none');
-    // document.querySelector('.meme-editor-container').classList.add('flex');
+    document.querySelector('.gallery-container').classList.add('display-none');
+    document.querySelector('.meme-editor-container').classList.remove('display-none');
+    document.querySelector('.meme-editor-container').classList.add('flex');
     initCanvas();
     createMeme(+elImg.id);
     renderMeme();
@@ -26,14 +26,22 @@ function onSelectLineByClick(ev) {
     const meme = getMeme();
     if (meme.lines.length === 0) return;
 
+    let isFound = false;
+
     meme.lines.forEach((line, idx) => {
         const { xStart, xEnd, yStart, yEnd } = line.boundaries;
-        if (yStart < yEnd) {
-            if ((mouseX >= xStart && mouseX <= xEnd) && (mouseY >= yStart && mouseY <= yEnd)) {
-                onSwitchLine(idx);
-            }
-        }
-    })
+        if ((mouseX >= xStart && mouseX <= xEnd) && (mouseY >= yStart && mouseY <= yEnd)) {
+            onSwitchLine(idx);
+            isFound = true;
+        };
+    });
+
+    if (isFound) {
+        return
+    } else {
+        meme.shouldMarkText = false;
+        renderMeme();
+    }
 }
 
 function renderMeme() {
@@ -49,7 +57,7 @@ function renderMeme() {
 }
 
 function drawText(lines, meme) {
-
+    console.log('gMeme.shouldMarkText :', gMeme.shouldMarkText);
     lines.forEach((line, idx) => {
         gCtx.font = `${line.size}px ${line.font}`;
         gCtx.textAlign = line.align;
@@ -74,7 +82,7 @@ function drawText(lines, meme) {
         setLineBoundaries(xStart, yStart, xEnd, yEnd, idx);
         ////////// SET BOUNDARIES ON EVERY DRAWN LINE FOR MOUSE/TOUCH EVENTS //////////
 
-        if (idx === meme.selectedLineIdx) {
+        if (idx === meme.selectedLineIdx && meme.shouldMarkText) {
             markSelectedLine(xStart, yStart, xEnd, yEnd);
         };
     });
@@ -85,7 +93,7 @@ function markSelectedLine(xStart, yStart, xEnd, yEnd) {
     gCtx.beginPath();
     gCtx.rect(xStart, yStart, xEnd, yEnd);
     gCtx.lineWidth = 3;
-    gCtx.strokeStyle = 'red';
+    gCtx.strokeStyle = 'black';
     gCtx.stroke();
     gCtx.closePath();
 }

@@ -40,6 +40,7 @@
                 <nav class="search-nav flex justify-around align-center">
 
                     <div class="search-bar">
+                        <i class="fas fa-search fa-2x"></i>
                         <input type="text" class="search-input" placeholder="Search" oninput="renderImages(this.value)">
                     </div>
 
@@ -60,7 +61,7 @@
 
             <!-- MEME EDITOR -->
 
-            <section class="meme-editor-container justify-around flex">
+            <section class="meme-editor-container justify-around display-none">
 
                 <!-- CANVAS -->
 
@@ -68,7 +69,7 @@
                     <canvas></canvas>
                 </div>
 
-                <!-- EDITOR -->
+                <!-- CONTROL PANEL -->
 
                 <div class="control-panel flex column align-center">
 
@@ -82,12 +83,12 @@
                         <button class="btn-control btn-remove-line" onclick="onRemoveLine()"><i class="fas fa-trash fa-2x"></i></button>
                     </div>
 
-                    <div class="control-fonts">
+                    <div class="control-fonts flex wrap justify-between">
                         <button class="btn-control btn-font-bigger" onclick="onSetFontSize(1)">Font +</button>
                         <button class="btn-control btn-font-smaller" onclick="onSetFontSize(-1)">Font -</button>
-                        <button class="btn-control btn-font-left" onclick="onSetAlignText('start')">Align Left</button>
-                        <button class="btn-control btn-font-center" onclick="onSetAlignText('center')">Align Center</button>
-                        <button class="btn-control btn-font-right" onclick="onSetAlignText('end')">Align Right</button>
+                        <button class="btn-control btn-font-left" onclick="onSetAlignText('start')"><i class="fas fa-align-left fa-2x"></i></button>
+                        <button class="btn-control btn-font-center" onclick="onSetAlignText('center')"><i class="fas fa-align-center fa-2x"></i></button>
+                        <button class="btn-control btn-font-right" onclick="onSetAlignText('end')"><i class="fas fa-align-right fa-2x"></i></button>
                         <select class="select-font-family" onchange="onSetFontFamily(this.value)">
                             <option value="impact">Impact</option>
                             <option value="arial">Arial</option>
@@ -96,16 +97,30 @@
                             <option value="times new roman">Times New Roman</option>
                             <option value="georgia">Georgia</option>
                         </select>
-                        <button class="btn-control btn-font-stroke"><input type="color" oninput="onSetStrokeColor(this.value)"></button>
-                        <button class="btn-control btn-font-fill"><input type="color" oninput="onSetFillColor(this.value)"></button>
+                        <button class="btn-control btn-font-stroke">
+                            <i class="fas fa-palette fa-2x"></i>
+                            <input type="color" oninput="onSetStrokeColor(this.value)">
+                        </button>
+                        <button class="btn-control btn-font-fill">
+                            <i class="fas fa-fill fa-2x"></i>
+                            <input type="color" oninput="onSetFillColor(this.value)">
+                        </button>
                     </div>
 
                     <div class="control-stickers">
 
                     </div>
 
-                    <div class="control-sharing">
-
+                    <div class="control-sharing flex justify-between">
+                        <button class="btn-control btn-share">
+                            <i class="fas fa-share-alt"></i>
+                            Share
+                            <i class="fab fa-facebook"></i>
+                        </button>
+                        <button class="btn-control btn-download">
+                            <i class="fas fa-download"></i>
+                            Download
+                        </button>
                     </div>
 
                 </div>
