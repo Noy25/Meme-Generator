@@ -33,14 +33,14 @@ input:focus {
 
 button {
     border: none;
+}
+
+button:hover, .btn-control:hover {
+    opacity: .8;
     cursor: pointer;
 }
 
-button:hover {
-    opacity: .8;
-}
-
-button:active {
+button:active, .btn-control:active {
     transform: scale(.95);
 }
 
@@ -243,6 +243,7 @@ canvas {
     width: 500px;
     border-radius: 10px;
     background-color: beige;
+    cursor: grab;
 }
 
 /* CONTROL PANEL */
@@ -354,24 +355,32 @@ input[type="color"] {
     background-color: #1E7CD3;
 }
 
-.btn-share .fa-share-alt, .btn-share .fa-facebook, .btn-download .fa-download {
+.fa-share-alt, .fa-facebook, .fa-download {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
 }
 
-.btn-share .fa-share-alt {
+.fa-share-alt {
     left: 20%;
 }
 
-.btn-share .fa-facebook {
+.fa-facebook {
     right: 20%;
+}
+
+.btn-share span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
 }
 
 .btn-download {
     background-color: #8F44BB;
 }
 
-.btn-download .fa-download {
+.fa-download {
     left: 15%;
 }

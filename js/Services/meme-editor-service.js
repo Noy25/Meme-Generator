@@ -2,11 +2,60 @@
 
 let gMeme = null;
 
+function moveLine(dx, dy) {
+    gMeme.lines[gMeme.selectedLineIdx].pos.x += dx;
+    gMeme.lines[gMeme.selectedLineIdx].pos.y += dy;
+}
+
+function isLineClicked(pos) {
+    return gMeme.lines.findIndex(line => {
+        const { xStart, xEnd, yStart, yEnd } = line.boundaries;
+        return ((pos.offsetX >= xStart && pos.offsetX <= xEnd) && (pos.offsetY >= yStart && pos.offsetY <= yEnd));
+    });
+}
+
+function toggleLineIsDrag(shouldDrag) {
+    gMeme.lines[gMeme.selectedLineIdx].isDrag = shouldDrag;
+}
+
+function shareToFacebook() {
+    const imgDataUrl = gElCanvas.toDataURL();
+    console.log(gElCanvas);
+    // A function to be called if request succeeds
+    function onSuccess(uploadedImgUrl) {
+        const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl)
+        document.querySelector('a.btn-share').href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}" title="Share on Facebook" target="_blank">`;
+
+        // window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}`);
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}`);
+    }
+    doUploadImg(imgDataUrl, onSuccess);
+}
+
+function doUploadImg(imgDataUrl, onSuccess) {
+
+    const formData = new FormData();
+    formData.append('img', imgDataUrl)
+
+    fetch('//ca-upload.com/here/upload.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(res => res.text())
+        .then((url) => {
+            onSuccess(url)
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+}
+
 function setLineBoundaries(xStart, yStart, xEnd, yEnd, idx) {
     gMeme.lines[idx].boundaries = { xStart, xEnd: xStart + xEnd, yStart, yEnd: yStart + yEnd };
 }
 
 function setAlignText(direction) {
+    if (!gMeme.isLineSelected) return;
     gMeme.lines[gMeme.selectedLineIdx].align = direction;
     switch (direction) {
         case 'start':
@@ -19,23 +68,25 @@ function setAlignText(direction) {
             gMeme.lines[gMeme.selectedLineIdx].pos.x = 250;
             break;
     }
-
-
 }
 
 function setFontFamily(fontFamily) {
+    if (!gMeme.isLineSelected) return;
     gMeme.lines[gMeme.selectedLineIdx].font = fontFamily;
 }
 
 function setFillColor(color) {
+    if (!gMeme.isLineSelected) return;
     gMeme.lines[gMeme.selectedLineIdx].fill = color;
 }
 
 function setStrokeColor(color) {
+    if (!gMeme.isLineSelected) return;
     gMeme.lines[gMeme.selectedLineIdx].stroke = color;
 }
 
 function setFontSize(change) {
+    if (!gMeme.isLineSelected) return;
     switch (change) {
         case 1:
             gMeme.lines[gMeme.selectedLineIdx].size++;
@@ -44,16 +95,16 @@ function setFontSize(change) {
             gMeme.lines[gMeme.selectedLineIdx].size--;
             break;
     }
-    console.log('gMeme.lines[gMeme.selectedLineIdx].size :', gMeme.lines[gMeme.selectedLineIdx].size);
 }
 
 function removeLine() {
-    if (gMeme.lines.length === 0) return;
+    if (gMeme.lines.length === 0 || !gMeme.isLineSelected) return;
     gMeme.lines.splice(gMeme.selectedLineIdx, 1);
     gMeme.selectedLineIdx = 0;
 }
 
 function addLine() {
+    gMeme.isLineSelected = true;
     gMeme.lines.push({
         txt: 'Enter your text here',
         font: 'impact',
@@ -61,13 +112,14 @@ function addLine() {
         align: 'center',
         fill: 'white',
         stroke: 'black',
-        pos: { x: 250, y: 250 }
+        pos: { x: 250, y: 250 },
+        isDrag: false
     })
     gMeme.selectedLineIdx = gMeme.lines.length - 1;
 }
 
 function switchLine(idx) {
-    gMeme.shouldMarkText = true;
+    gMeme.isLineSelected = true;
     if (idx >= 0) {
         gMeme.selectedLineIdx = idx;
     } else {
@@ -75,8 +127,16 @@ function switchLine(idx) {
     }
 }
 
+function setIsLineSelected(shouldMark) {
+    gMeme.isLineSelected = shouldMark;
+}
+
 function setLineTxt(txt) {
     gMeme.lines[gMeme.selectedLineIdx].txt = txt;
+}
+
+function getLine() {
+    return gMeme.lines[gMeme.selectedLineIdx];
 }
 
 function getMeme() {
@@ -87,7 +147,7 @@ function createMeme(selectedImgId) {
     gMeme = {
         selectedImgId,
         selectedLineIdx: 0,
-        shouldMarkText: true,
+        isLineSelected: true,
         lines: [
             {
                 txt: 'Enter your text here',
@@ -96,7 +156,8 @@ function createMeme(selectedImgId) {
                 align: 'center',
                 fill: 'white',
                 stroke: 'black',
-                pos: { x: 250, y: 50 }
+                pos: { x: 250, y: 50 },
+                isDrag: false
             },
             {
                 txt: 'Enter your text here',
@@ -105,7 +166,8 @@ function createMeme(selectedImgId) {
                 align: 'center',
                 fill: 'white',
                 stroke: 'black',
-                pos: { x: 250, y: 450 }
+                pos: { x: 250, y: 450 },
+                isDrag: false
             }
         ]
     }
