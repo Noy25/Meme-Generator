@@ -18,12 +18,13 @@ function onInitEditor(elImg) {
 function showEditor() {
     document.querySelector('.meme-editor-container').classList.remove('display-none');
     document.querySelector('.meme-editor-container').classList.add('flex');
+    document.body.style.overflow = 'hidden';
 }
 
 function initCanvas() {
     gElCanvas = document.querySelector('canvas');
-    gElCanvas.width = 500;
-    gElCanvas.height = 500;
+    gElCanvas.width = 480;
+    gElCanvas.height = 480;
     gCtx = gElCanvas.getContext('2d');
     addListeners();
 }

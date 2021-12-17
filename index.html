@@ -30,6 +30,7 @@
                     <li><a class="nav-link flex justify-center align-center" href="#">About</a></li>
                 </ul>
             </nav>
+            <button class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars fa-2x"></i></button>
         </header>
 
         <main class="main-content main-layout">
@@ -62,7 +63,7 @@
 
             <!-- MEME EDITOR -->
 
-            <section class="meme-editor-container justify-around display-none">
+            <section class="meme-editor-container justify-even display-none">
 
                 <!-- CANVAS -->
 
@@ -136,6 +137,8 @@
 
 
     </main>
+
+    <div class="main-screen" onclick="toggleMenu()"></div>
 
     <script src="js/utils.js"></script>
     <script src="js/Services/storage-service.js"></script>

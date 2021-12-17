@@ -108,7 +108,7 @@ button:active, .btn-control:active {
 
 .main-header {
     height: 75px;
-    padding: 5px 80px;
+    padding: 5px 5%;
     border-radius: 40px;
     background-image: linear-gradient(to right, #0F9BB3, #30BB73);
     box-shadow: #161616 0 0 10px 3px;
@@ -136,7 +136,24 @@ button:active, .btn-control:active {
     background-color: #FEFEFE;
 }
 
-/****** MAIN CONTENT ******/
+.hamburger {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    position: relative;
+    
+    display: none;
+}
+
+.hamburger .fa-bars {
+    color: #2cb779;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/************ MAIN CONTENT ************/
 
 .main-content {
     margin-top: 20px;
@@ -145,11 +162,16 @@ button:active, .btn-control:active {
 /*** GALLERY SECTION ***/
 
 section.gallery-container {
+    padding: 10px;
     background-color: #383B42;
-    padding: 20px;
     border-radius: 10px;
     box-shadow: #161616 0 0 10px 3px;
 
+}
+
+.search-nav {
+    gap: 20px;
+    margin-top: 10px;
 }
 
 .search-bar, .keywords-bar {
@@ -196,7 +218,6 @@ section.gallery-container {
 .keyword:hover {
     cursor: pointer;
     text-shadow: 0px 0px 5px white;
-    /* transform: scale(1.2); */
 }
 
 .btn-more-keywords {
@@ -209,11 +230,11 @@ section.gallery-container {
 
 .gallery {
     margin-top: 40px;
+    gap: 30px;
 }
 
 .meme-img {
     width: 200px;
-    margin: 0 15px 25px;
     border-radius: 15px;
     box-shadow: 0 0 10px 2px #161616;
 
@@ -229,14 +250,9 @@ section.gallery-container {
 /*** MEME EDITOR SECTION ***/
 /* CANVAS */
 
-.canvas-container {
-    height: 500px;
-    width: 500px;
-}
-
 canvas {
-    height: 500px;
-    width: 500px;
+    height: 480px;
+    width: 480px;
     border-radius: 10px;
     background-color: beige;
     cursor: grab;
@@ -245,8 +261,8 @@ canvas {
 /* CONTROL PANEL */
 
 .control-panel {
-    height: 500px;
-    width: 500px;
+    height: 480px;
+    width: 480px;
     padding: 20px;
     border-radius: 10px;
     background-color: #383B42;
@@ -379,4 +395,92 @@ input[type="color"] {
 
 .fa-download {
     left: 15%;
+}
+
+/* SCREEN */
+
+.main-screen {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(0 0 0 / 50%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+
+    transition: opacity .5s;
+}
+
+.main-screen.menu-open {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 2; /* z-index needs to be above all elements except the menu */
+}
+
+/****** MEDIA QUERIES ******/
+
+/* TABLET */
+
+@media (max-width: 1260px) {
+    .main-layout {
+        max-width:750px;
+    }
+    .search-nav {
+        flex-direction: column;
+    }
+    .meme-editor-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 750px) {
+    .main-layout {
+        max-width:480px;
+    }
+    .main-header {
+        border-radius: 0;
+    }
+    .hamburger {
+        display: block;
+    }
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 200px;
+        background-color: #22252C;
+        z-index: 3;
+        transform: translateX(100%);
+
+        transition: transform .5s;
+    }
+    .main-nav ul {
+        flex-direction: column;
+    }
+    .main-nav.menu-open {
+        transform: translateX(0%);
+    }
+    .main-nav ul > * {
+        margin-top: 20px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid white;
+        display: flex;
+        justify-content: center;
+    }
+    .search-bar, .keywords-bar {
+        width: 360px;
+    }
+}
+
+/* MOBILE SMALL */
+
+@media (max-width: 480px) {
+    
 }

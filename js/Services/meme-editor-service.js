@@ -3,14 +3,21 @@
 let gMeme = null;
 
 function downloadCanvas(elLink) {
+    // Clean rectangles on canvas
+    gMeme.isLineSelected = false;
+    renderMeme();
+
     const data = gElCanvas.toDataURL();
     elLink.href = data;
     elLink.download = 'my-meme';
-  }
+}
 
 function shareToFacebook(elLink) {
+    // Clean rectangles on canvas
+    gMeme.isLineSelected = false;
+    renderMeme();
+
     const imgDataUrl = gElCanvas.toDataURL();
-    console.log(gElCanvas);
     // A function to be called if request succeeds
     function onSuccess(uploadedImgUrl) {
         const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl)
@@ -129,8 +136,8 @@ function toggleLineIsDrag(shouldDrag) {
     gMeme.lines[gMeme.selectedLineIdx].isDrag = shouldDrag;
 }
 
-function setIsLineSelected(shouldMark) {
-    gMeme.isLineSelected = shouldMark;
+function setIsLineSelected(shouldSelect) {
+    gMeme.isLineSelected = shouldSelect;
 }
 
 function setLineTxt(txt) {

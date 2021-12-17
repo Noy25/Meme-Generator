@@ -26,3 +26,8 @@ function renderImages(keyword) {
     const msg = `<p style="text-align: center">Sorry, no matches.<br>Try searching for something else or trying using one of the keywords above.`
     document.querySelector('.gallery').innerHTML = (imgs.length)? strHTMLs.join('') : msg;
 }
+
+function toggleMenu() {
+    document.querySelector('.main-nav').classList.toggle('menu-open');
+    document.querySelector('.main-screen').classList.toggle('menu-open');
+};
