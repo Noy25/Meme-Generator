@@ -1,5 +1,9 @@
 'use strict'
 
+const gStickers = ['❤','😁','😂','🤣','😅','😎','😋','😍','😘','🥰','😑','🤩','🙄','😏','😣','😥','😪','🥱'];
+let gPrevStickerIdx = 0;
+let gNextStickerIdx = 4;
+
 let gMeme = null;
 let gCanvasWidth;
 let gCanvasHeight;
@@ -47,6 +51,24 @@ function doUploadImg(imgDataUrl, onSuccess) {
         .catch((err) => {
             console.error(err)
         })
+}
+
+function addSticker(emoji) {
+    gMeme.isLineSelected = true;
+    gMeme.lines.push({
+        txt: emoji,
+        font: 'impact',
+        size: 40,
+        align: 'center',
+        fill: 'white',
+        stroke: 'black',
+        pos: { x: gCanvasWidth / 2, y: gCanvasHeight / 2 },
+        isDrag: false
+    });
+    console.log(gMeme);
+    if (gMeme.lines[gMeme.lines.length - 1].txt === '❤') gMeme.lines[gMeme.lines.length - 1].fill = 'red';
+
+    gMeme.selectedLineIdx = gMeme.lines.length - 1;
 }
 
 function setAlignText(direction) {
@@ -148,6 +170,22 @@ function setLineTxt(txt) {
 
 function getLine() {
     return gMeme.lines[gMeme.selectedLineIdx];
+}
+
+function showStickers(which) {
+    if (which === 'prev') {
+        if (gPrevStickerIdx === 0) return;
+        gPrevStickerIdx--;
+        gNextStickerIdx--;
+    } else {
+        if (gNextStickerIdx === gStickers.length -  1) return;
+        gPrevStickerIdx++;
+        gNextStickerIdx++;
+    }
+}
+
+function getStickersForDisplay() {
+    return gStickers.slice(gPrevStickerIdx, gNextStickerIdx);
 }
 
 function getMeme() {

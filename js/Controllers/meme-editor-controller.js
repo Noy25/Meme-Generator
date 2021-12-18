@@ -12,6 +12,7 @@ function onImgSelect(elImg) {
     showEditor();
     initCanvas();
     createMeme(+elImg.id);
+    renderStickers();
     renderMeme();
 }
 
@@ -44,6 +45,24 @@ function renderMeme() {
     updateTextInput();
 
     drawText(lines, meme);
+}
+
+function onShowStickers(which) {
+    showStickers(which);
+    renderStickers();
+}
+
+function renderStickers() {
+    const stickers = getStickersForDisplay();
+
+    let strHTMLs = [`<button class="btn-sticker-prev" onclick="onShowStickers('prev')"><</button>`];
+    stickers.forEach(sticker => {
+        const className = (sticker === '❤')? 'sticker heart': 'sticker';
+        strHTMLs.push(`<span class="${className}" onclick="onAddSticker(this.innerText)">${sticker}</span>`)
+    });
+    strHTMLs.push(`<button class="btn-sticker-next" onclick="onShowStickers('next')">></button>`);
+
+    document.querySelector('.control-stickers').innerHTML = strHTMLs.join('');
 }
 
 function updateTextInput() {
@@ -80,6 +99,11 @@ function markSelectedLine(metrics) {
     gCtx.strokeStyle = 'black';
     gCtx.stroke();
     gCtx.closePath();
+}
+
+function onAddSticker(emoji) {
+    addSticker(emoji);
+    renderMeme();
 }
 
 function onSetAlignText(direction) {
@@ -191,12 +215,12 @@ function getEvPos(ev) {
     if (gTouchEvs.includes(ev.type)) {
         ev.preventDefault()
         ev = ev.changedTouches[0]
-        // let rect = ev.target.getBoundingClientRect();
+        let rect = ev.target.getBoundingClientRect();
         pos = {
-            offsetX: ev.clientX,
-            offsetY: ev.clientY - ev.target.offsetTop
-            // offsetX: ev.pageX - rect.left,
-            // offsetY: ev.pageY - rect.top
+            // offsetX: ev.clientX,
+            // offsetY: ev.clientY - ev.target.offsetTop
+            offsetX: ev.pageX - rect.left,
+            offsetY: ev.pageY - rect.top
         }
     }
     return pos
