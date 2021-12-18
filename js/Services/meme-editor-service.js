@@ -132,6 +132,7 @@ function isLineClicked(pos) {
 }
 
 function toggleLineIsDrag(shouldDrag) {
+    if (gMeme.lines.length === 0) return;
     gMeme.lines[gMeme.selectedLineIdx].isDrag = shouldDrag;
 }
 

@@ -218,7 +218,7 @@ function onDown(ev) {
 
 function onMove(ev) {
     const line = getLine();
-    if (!line.isDrag) return;
+    if (!line || !line.isDrag) return;
     const pos = getEvPos(ev);
     const dx = pos.offsetX - gStartPos.offsetX;
     const dy = pos.offsetY - gStartPos.offsetY;

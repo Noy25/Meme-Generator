@@ -46,11 +46,11 @@
                         <i class="fas fa-search fa-2x"></i>
                         <input type="text" list="keywords-datalist" class="search-input" placeholder="Search" oninput="renderImages(this.value)">
                         <datalist id="keywords-datalist">
-                            <option value="Crazy">
-                            <option value="Funny">
-                            <option value="Happy">
-                            <option value="Sad">
-                            <option value="Sarcastic">
+                            <option value="crazy">
+                            <option value="funny">
+                            <option value="happy">
+                            <option value="sad">
+                            <option value="sarcastic">
                           </datalist>
                     </div>
 
@@ -93,7 +93,8 @@
                         <button class="btn-control btn-remove-line" onclick="onRemoveLine()"><i class="fas fa-trash fa-2x"></i></button>
                     </div>
 
-                    <div class="control-fonts flex wrap justify-between">
+                    <div class="control-fonts">
+                    <!-- <div class="control-fonts flex wrap justify-between"> -->
                         
                         <button class="btn-control btn-font-bigger" onclick="onSetFontSize(1)">Font +</button>
                         <button class="btn-control btn-font-smaller" onclick="onSetFontSize(-1)">Font -</button>
@@ -155,7 +156,6 @@
             </section>
 
         </main>
-
 
 
     </main>
