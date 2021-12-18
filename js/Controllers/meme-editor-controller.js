@@ -13,9 +13,10 @@ let gStickerIdx = 0;
 
 function onImgSelect(elImg) {
     hideGallery();
+    hideSavedMemes();
     showEditor();
     initCanvas();
-    createMeme(+elImg.id);
+    createMeme(elImg.id);
     renderStickers();
     renderMeme();
 }
@@ -49,7 +50,7 @@ function renderMeme() {
     const meme = getMeme();
     const { selectedImgId, lines } = meme;
 
-    const elImg = document.getElementById(`${selectedImgId}`)
+    const elImg = document.getElementById(`${selectedImgId}`);
     gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height);
 
     updateTextInput();

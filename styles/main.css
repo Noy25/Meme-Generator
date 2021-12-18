@@ -269,8 +269,6 @@ section.gallery-container {
 }
 
 canvas {
-    /* height: 480px; */
-    /* width: 480px; */
     border-radius: 10px;
     background-color: beige;
     cursor: grab;
@@ -445,6 +443,11 @@ input[type="color"] {
 
 .fa-save {
     left: 20%;
+}
+
+/*** SAVED MEMES SECTION ***/
+.back-to-gallery {
+    width: 150px;
 }
 
 /* SCREEN */

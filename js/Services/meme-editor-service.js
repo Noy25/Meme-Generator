@@ -9,7 +9,7 @@ let gCanvasWidth;
 let gCanvasHeight;
 
 function saveMeme(dataURL) {
-    let savedMeme = { url: dataURL }
+    let savedMeme = { src: dataURL , id: getRandomId() };
     gSavedMemes.push(savedMeme);
     saveMemesToStorage();
 }
@@ -41,7 +41,6 @@ function addSticker(emoji) {
         pos: { x: gCanvasWidth / 2, y: gCanvasHeight / 2 },
         isDrag: false
     });
-    console.log(gMeme);
     if (gMeme.lines[gMeme.lines.length - 1].txt === '❤') gMeme.lines[gMeme.lines.length - 1].fill = 'red';
 
     gMeme.selectedLineIdx = gMeme.lines.length - 1;
