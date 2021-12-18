@@ -154,19 +154,37 @@ function getMeme() {
     return gMeme;
 }
 
-function setLineBoundaries(xStart, yStart, xEnd, yEnd, idx) {
+function setLineBoundaries(metrics, idx) {
+    const { xStart, yStart, xEnd, yEnd } = metrics;
     gMeme.lines[idx].boundaries = { xStart, xEnd: xStart + xEnd, yStart, yEnd: yStart + yEnd };
+}
+
+function getLineRectMetrics(idx) {
+    const line = gMeme.lines[idx];
+    let height = line.size;
+    let width = gCtx.measureText(line.txt).width;;
+    let yStart = line.pos.y - height;
+    let xEnd = width + 10;
+    let yEnd = height + 10;
+    let xStart;
+
+    if (line.align === 'center') xStart = line.pos.x - (width / 2) - 5;
+    else if (line.align === 'start') xStart = line.pos.x - 5;
+    else xStart = line.pos.x - width - 5;
+
+    return { xStart, yStart, xEnd, yEnd };
 }
 
 function setCanvasMetrics() {
     gCanvasWidth = gElCanvas.width;
     gCanvasHeight = gElCanvas.height;
-    if (gMeme) {
-        gMeme.lines.forEach(line => {
-            line.pos.x = gCanvasWidth / 2;
-            line.pos.y = gCanvasHeight / 2;
-        });
-    }
+    // if (gMeme) {
+    //     gMeme.lines.forEach(line => {
+    //         line.pos.x = gCanvasWidth / 2;
+    //         line.pos.y = gCanvasHeight / 2;
+    //     });
+    //     renderMeme();
+    // }
 }
 
 function createMeme(selectedImgId) {

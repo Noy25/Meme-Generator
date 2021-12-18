@@ -23,7 +23,7 @@
     <main class="main-container main-layout">
 
         <header class="main-header main-layout flex justify-between align-center">
-            <img src="imgs/LOGO.png" class="logo" alt="LOGO">
+            <img src="imgs/LOGO.png" class="logo" alt="LOGO" onclick="refreshPage()">
             <nav class="main-nav">
                 <ul class="clean-list flex">
                     <li><a class="nav-link gallery-link focused flex justify-center align-center" href="" onclick="refreshPage()">Gallery</a></li>
@@ -43,7 +43,15 @@
 
                     <div class="search-bar">
                         <i class="fas fa-search fa-2x"></i>
-                        <input type="text" class="search-input" placeholder="Search" oninput="renderImages(this.value)">
+                        <!-- <input type="text" class="search-input" placeholder="Search" oninput="renderImages(this.value)"> -->
+                        <input type="text" list="keywords-datalist" class="search-input" placeholder="Search" oninput="renderImages(this.value)">
+                        <datalist id="keywords-datalist">
+                            <option value="Crazy">
+                            <option value="Funny">
+                            <option value="Happy">
+                            <option value="Sad">
+                            <option value="Sarcastic">
+                          </datalist>
                     </div>
 
                     <div class="keywords-bar">

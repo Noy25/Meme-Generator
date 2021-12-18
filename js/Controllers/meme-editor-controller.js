@@ -7,7 +7,7 @@ let gCtx;
 let gStartPos;
 
 
-function onInitEditor(elImg) {
+function onImgSelect(elImg) {
     hideGallery();
     showEditor();
     initCanvas();
@@ -62,29 +62,18 @@ function drawText(lines, meme) {
         gCtx.strokeStyle = line.stroke;
         gCtx.strokeText(line.txt, line.pos.x, line.pos.y);
 
-        ////////// SET BOUNDARIES ON EVERY DRAWN LINE FOR MOUSE/TOUCH EVENTS //////////
-        let height = line.size;
-        let width = gCtx.measureText(line.txt).width;;
-        let yStart = line.pos.y - height;
-        let xEnd = width + 10;
-        let yEnd = height + 10;
-        let xStart;
-
-        if (line.align === 'center') xStart = line.pos.x - (width / 2) - 5;
-        else if (line.align === 'start') xStart = line.pos.x - 5;
-        else xStart = line.pos.x - width - 5;
-
-        setLineBoundaries(xStart, yStart, xEnd, yEnd, idx);
-        ////////// SET BOUNDARIES ON EVERY DRAWN LINE FOR MOUSE/TOUCH EVENTS //////////
+        const metrics = getLineRectMetrics(idx);
+        setLineBoundaries(metrics, idx);
 
         if (idx === meme.selectedLineIdx && meme.isLineSelected) {
-            markSelectedLine(xStart, yStart, xEnd, yEnd);
+            markSelectedLine(metrics);
         };
     });
 
 }
 
-function markSelectedLine(xStart, yStart, xEnd, yEnd) {
+function markSelectedLine(metrics) {
+    const { xStart, yStart, xEnd, yEnd } = metrics;
     gCtx.beginPath();
     gCtx.rect(xStart, yStart, xEnd, yEnd);
     gCtx.lineWidth = 3;
@@ -144,11 +133,11 @@ function onSetLineTxt(txt) {
 function addListeners() {
     addMouseListeners();
     addTouchListeners();
-        
+
     window.addEventListener('resize', () => {
         resizeCanvas();
         renderMeme();
-      });
+    });
 }
 
 function addMouseListeners() {
@@ -196,17 +185,19 @@ function onUp() {
 
 function getEvPos(ev) {
     let pos = {
-      offsetX: ev.offsetX,
-      offsetY: ev.offsetY
+        offsetX: ev.offsetX,
+        offsetY: ev.offsetY
     }
     if (gTouchEvs.includes(ev.type)) {
-      ev.preventDefault()
-      ev = ev.changedTouches[0]
-      let rect = ev.target.getBoundingClientRect();
-      pos = {
-        offsetX: ev.pageX - rect.left,
-        offsetY: ev.pageY - rect.top
-      }
+        ev.preventDefault()
+        ev = ev.changedTouches[0]
+        // let rect = ev.target.getBoundingClientRect();
+        pos = {
+            offsetX: ev.clientX,
+            offsetY: ev.clientY - ev.target.offsetTop
+            // offsetX: ev.pageX - rect.left,
+            // offsetY: ev.pageY - rect.top
+        }
     }
     return pos
-  }
+}

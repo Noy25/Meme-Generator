@@ -22,7 +22,7 @@ function renderKeywords() {
 
 function renderImages(keyword) {
     const imgs = getImgsForDisplay(keyword);
-    const strHTMLs = imgs.map((img, idx) => `<img src="${img.url}" onclick="onInitEditor(this)" class="meme-img" id="${img.id}" alt="Image ${idx + 1}">`)
+    const strHTMLs = imgs.map((img, idx) => `<img src="${img.url}" onclick="onImgSelect(this)" class="meme-img" id="${img.id}" alt="Image ${idx + 1}">`)
     const msg = `<p style="text-align: center">Sorry, no matches.<br>Try searching for something else or trying using one of the keywords above.`
     document.querySelector('.gallery').innerHTML = (imgs.length)? strHTMLs.join('') : msg;
 }
