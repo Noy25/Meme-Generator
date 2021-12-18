@@ -1,7 +1,7 @@
 'use strict';
 
 function saveMemesToStorage() {
-    
+    saveToStorage('savedMemesDB', gSavedMemes);
 }
 
 function saveToStorage(key, val) {

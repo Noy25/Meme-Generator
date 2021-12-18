@@ -6,6 +6,10 @@ let gElCanvas;
 let gCtx;
 let gStartPos;
 
+const gStickers = ['❤', '😁', '😂', '🤣', '😅', '😎', '😋', '😍', '😘', '🥰', '😑', '🤩', '🙄', '😏', '😣', '😥', '😪', '🥱'];
+const gStickersToShow = 4;
+let gStickerIdx = 0;
+
 
 function onImgSelect(elImg) {
     hideGallery();
@@ -21,6 +25,11 @@ function showEditor() {
     document.querySelector('.meme-editor-container').classList.add('flex');
 }
 
+function hideEditor() {
+    document.querySelector('.meme-editor-container').classList.add('display-none');
+    document.querySelector('.meme-editor-container').classList.remove('flex');
+}
+
 function initCanvas() {
     gElCanvas = document.querySelector('canvas');
     resizeCanvas();
@@ -31,7 +40,8 @@ function initCanvas() {
 function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container');
     gElCanvas.width = elContainer.offsetWidth;
-    gElCanvas.height = elContainer.offsetHeight;
+    gElCanvas.height = gElCanvas.width;
+    // gElCanvas.height = elContainer.offsetHeight;
     setCanvasMetrics();
 }
 
@@ -47,22 +57,37 @@ function renderMeme() {
     drawText(lines, meme);
 }
 
-function onShowStickers(which) {
-    showStickers(which);
-    renderStickers();
-}
-
 function renderStickers() {
+    let strHTMLs = [`<button class="btn-sticker-prev" onclick="onScrollStickers(-1)"><</button>`];
+
     const stickers = getStickersForDisplay();
 
-    let strHTMLs = [`<button class="btn-sticker-prev" onclick="onShowStickers('prev')"><</button>`];
-    stickers.forEach(sticker => {
-        const className = (sticker === '❤')? 'sticker heart': 'sticker';
-        strHTMLs.push(`<span class="${className}" onclick="onAddSticker(this.innerText)">${sticker}</span>`)
-    });
-    strHTMLs.push(`<button class="btn-sticker-next" onclick="onShowStickers('next')">></button>`);
+    for (let i = 0; i < 4; i++) {
+        const className = (stickers[i] === '❤') ? 'sticker heart' : 'sticker';
+        strHTMLs.push(`<span class="${className}" onclick="onAddSticker(this.innerText)">${stickers[i]}</span>`);
+    }
+
+    strHTMLs.push(`<button class="btn-sticker-next" onclick="onScrollStickers(1)">></button>`);
 
     document.querySelector('.control-stickers').innerHTML = strHTMLs.join('');
+}
+
+function getStickersForDisplay() {
+    if (gStickerIdx + 3 < gStickers.length) {
+        return gStickers.slice(gStickerIdx, gStickerIdx + 4);
+    } else {
+        const gap = gStickers.length - gStickerIdx;
+        return gStickers.slice(gStickerIdx, gStickerIdx + gap).concat(gStickers.slice(0, 4 - gap));
+    }
+}
+
+function onScrollStickers(diff) {
+    gStickerIdx += diff;
+    if (gStickerIdx === -1) {
+        gStickerIdx = gStickers.length - 1;
+    }
+    if (gStickerIdx === gStickers.length) gStickerIdx = 0;
+    renderStickers();
 }
 
 function updateTextInput() {

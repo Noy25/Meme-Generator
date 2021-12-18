@@ -1,56 +1,32 @@
 'use strict'
 
-const gStickers = ['❤','😁','😂','🤣','😅','😎','😋','😍','😘','🥰','😑','🤩','🙄','😏','😣','😥','😪','🥱'];
-let gPrevStickerIdx = 0;
-let gNextStickerIdx = 4;
+const STORAGE_KEY = 'savedMemesDB';
+
+let gSavedMemes = _createSavedMemes();
 
 let gMeme = null;
 let gCanvasWidth;
 let gCanvasHeight;
 
-function downloadCanvas(elLink) {
-    // Clean rectangles on canvas
-    gMeme.isLineSelected = false;
-    renderMeme();
-
-    const data = gElCanvas.toDataURL();
-    elLink.href = data;
-    elLink.download = 'my-meme';
+function saveMeme(dataURL) {
+    let savedMeme = { url: dataURL }
+    gSavedMemes.push(savedMeme);
+    saveMemesToStorage();
 }
 
-function shareToFacebook(elLink) {
-    // Clean rectangles on canvas
-    gMeme.isLineSelected = false;
-    renderMeme();
+function getSavedMemes() {
+    return gSavedMemes;
+}
 
-    const imgDataUrl = gElCanvas.toDataURL();
-    // A function to be called if request succeeds
-    function onSuccess(uploadedImgUrl) {
-        const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl)
-        elLink.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}" title="Share on Facebook" target="_blank">`;
+function _createSavedMemes() {
+    let savedMemes = loadFromStorage(STORAGE_KEY);
 
-        // window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}`);
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${uploadedImgUrl}&t=${uploadedImgUrl}`);
+    if (!savedMemes) {
+        savedMemes = [];
+        saveToStorage(STORAGE_KEY, savedMemes);
     }
-    doUploadImg(imgDataUrl, onSuccess);
-}
 
-function doUploadImg(imgDataUrl, onSuccess) {
-
-    const formData = new FormData();
-    formData.append('img', imgDataUrl)
-
-    fetch('//ca-upload.com/here/upload.php', {
-        method: 'POST',
-        body: formData
-    })
-        .then(res => res.text())
-        .then((url) => {
-            onSuccess(url)
-        })
-        .catch((err) => {
-            console.error(err)
-        })
+    return savedMemes;
 }
 
 function addSticker(emoji) {
@@ -170,22 +146,6 @@ function setLineTxt(txt) {
 
 function getLine() {
     return gMeme.lines[gMeme.selectedLineIdx];
-}
-
-function showStickers(which) {
-    if (which === 'prev') {
-        if (gPrevStickerIdx === 0) return;
-        gPrevStickerIdx--;
-        gNextStickerIdx--;
-    } else {
-        if (gNextStickerIdx === gStickers.length -  1) return;
-        gPrevStickerIdx++;
-        gNextStickerIdx++;
-    }
-}
-
-function getStickersForDisplay() {
-    return gStickers.slice(gPrevStickerIdx, gNextStickerIdx);
 }
 
 function getMeme() {

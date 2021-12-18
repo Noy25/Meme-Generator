@@ -249,7 +249,6 @@ section.gallery-container {
 /* CANVAS */
 
 .canvas-container {
-    height: 480px;
     width: 480px;
     position: relative;
 }
@@ -398,9 +397,8 @@ input[type="color"] {
     color: black;
 }
 
-.btn-share, .btn-download {
-    width: 200px;
-    font-size: 1.1rem;
+.btn-share, .btn-download, .btn-save {
+    width: 140px;
     position: relative;
 }
 
@@ -409,21 +407,21 @@ input[type="color"] {
     box-shadow: -1px 3px 0px 0px #617e99;
 }
 
-.fa-share-alt, .fa-facebook, .fa-download {
+.fa-share-alt, .fa-facebook, .fa-download, .fa-save {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
 }
 
 .fa-share-alt {
-    left: 20%;
+    left: 15%;
 }
 
 .fa-facebook {
-    right: 20%;
+    right: 15%;
 }
 
-.btn-share span, .btn-download span {
+.btn-share span, .btn-download span, .btn-save span {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -437,7 +435,16 @@ input[type="color"] {
 }
 
 .fa-download {
-    left: 15%;
+    left: 5%;
+}
+
+.btn-save {
+    background-color: #25b03c;
+    box-shadow: -1px 3px 0px 0px #2b7937;
+}
+
+.fa-save {
+    left: 20%;
 }
 
 /* SCREEN */
@@ -475,6 +482,10 @@ input[type="color"] {
 
     .search-nav {
         flex-direction: column;
+    }
+
+    .search-bar, .keywords-bar {
+        width: 700px;
     }
 
     .meme-editor-container {
@@ -528,25 +539,24 @@ input[type="color"] {
         justify-content: center;
     }
 
+    .keywords-container {
+        flex-wrap: wrap;
+    }
+
     .search-bar, .keywords-bar {
-        width: 360px;
+        width: 90vw;
     }
 
-    .canvas-container {
-        height: 400px;
-        width: 400px;
-    }
-
-    .control-panel {
-        width: 400px;
-    }
-
-    .text-bar, .control-fonts, .control-stickers, .control-sharing {
-        width: 380px;
+    .meme-img {
+        width: 40vw;
     }
 
     .control-fonts {
         gap: 15px;
+    }
+
+    .sticker {
+        font-size: 2rem;
     }
 
     .btn-share, .btn-download {
@@ -555,5 +565,25 @@ input[type="color"] {
 
     .fa-download {
         left: 5%;
+    }
+}
+
+@media (max-width: 500px) {
+    .canvas-container, .control-panel {
+        width: 90vw;
+        margin: auto;
+    }
+
+    .text-bar, .control-fonts, .control-stickers, .control-sharing {
+        width: 80%;
+        margin: auto;
+    }
+}
+
+/* SMALL MOBILE */
+
+@media (max-width: 350px) {
+    .meme-img {
+        width: 90vw;
     }
 }
