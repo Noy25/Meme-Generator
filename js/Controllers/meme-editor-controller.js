@@ -192,6 +192,8 @@ function onSetLineTxt(txt) {
 
 ////////// MOUSE & TOUCH EVENTS //////////
 
+
+
 function addListeners() {
     addMouseListeners();
     addTouchListeners();
@@ -212,6 +214,17 @@ function addTouchListeners() {
     gElCanvas.addEventListener('touchmove', onMove);
     gElCanvas.addEventListener('touchstart', onDown);
     gElCanvas.addEventListener('touchend', onUp);
+}
+
+function removeListeners() {
+    gElCanvas.removeEventListener('mousemove', onMove);
+    gElCanvas.removeEventListener('mousedown', onDown);
+    gElCanvas.removeEventListener('mouseup', onUp);
+    gElCanvas.removeEventListener('touchmove', onMove);
+    gElCanvas.removeEventListener('touchstart', onDown);
+    gElCanvas.removeEventListener('touchend', onUp);
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', renderMeme);
 }
 
 function onDown(ev) {

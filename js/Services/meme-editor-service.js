@@ -8,9 +8,22 @@ let gMeme = null;
 let gCanvasWidth;
 let gCanvasHeight;
 
+function deleteSavedMeme(memeId) {
+    const idx = gSavedMemes.findIndex(meme => meme.id === memeId);
+    gSavedMemes.splice(idx, 1);
+    saveMemesToStorage();
+}
+
 function saveMeme(dataURL) {
-    let savedMeme = { src: dataURL, id: getRandomId() };
-    gSavedMemes.push(savedMeme);
+    const idx = gSavedMemes.findIndex(meme => meme.id === gMeme.id);
+    if (idx >= 0) {
+        gSavedMemes[idx].src = dataURL;
+    } else {
+        let savedMeme = gMeme;
+        savedMeme.src = dataURL;
+        savedMeme.id = getRandomId();
+        gSavedMemes.push(savedMeme);
+    }
     saveMemesToStorage();
 }
 
@@ -51,13 +64,13 @@ function setAlignText(direction) {
     gMeme.lines[gMeme.selectedLineIdx].align = direction;
     switch (direction) {
         case 'start':
-            gMeme.lines[gMeme.selectedLineIdx].pos.x = 20;
+            gMeme.lines[gMeme.selectedLineIdx].pos.x = gCanvasWidth * 0.05;
             break;
         case 'end':
-            gMeme.lines[gMeme.selectedLineIdx].pos.x = 480;
+            gMeme.lines[gMeme.selectedLineIdx].pos.x = gCanvasWidth * 0.95;
             break;
         case 'center':
-            gMeme.lines[gMeme.selectedLineIdx].pos.x = 250;
+            gMeme.lines[gMeme.selectedLineIdx].pos.x = gCanvasWidth / 2;
             break;
     }
 }
@@ -180,9 +193,9 @@ function setLineScalingPoint(metrics, idx) {
     let squareSize = 10;
     // squareSize variable is used to draw a square as a scaling point indicator on the canvas
     gMeme.lines[idx].scalingPoint = {
-        xStart: xStart + xEnd,
+        xStart: xStart + xEnd + 1,
         xEnd: xStart + xEnd +  squareSize,
-        yStart: yStart + yEnd,
+        yStart: yStart + yEnd + 1,
         yEnd: yStart + yEnd + squareSize,
         squareSize
     };
@@ -191,7 +204,7 @@ function setLineScalingPoint(metrics, idx) {
 function getLineRectMetrics(idx) {
     const line = gMeme.lines[idx];
     let height = line.size;
-    let width = gCtx.measureText(line.txt).width;;
+    let width = gCtx.measureText(line.txt).width;
     let yStart = line.pos.y - height;
     let xEnd = width + (height / 4);
     let yEnd = height + (height / 4);
@@ -207,16 +220,27 @@ function getLineRectMetrics(idx) {
 function setCanvasMetrics() {
     gCanvasWidth = gElCanvas.width;
     gCanvasHeight = gElCanvas.height;
-    // if (gMeme) {
-    //     gMeme.lines.forEach(line => {
-    //         line.pos.x = gCanvasWidth / 2;
-    //         line.pos.y = gCanvasHeight / 2;
-    //     });
-    //     renderMeme();
-    // }
+    if (gMeme) {
+        gMeme.lines.forEach((line, idx) => {
+            line.pos.x = gCanvasWidth / 2;
+            if (idx === 0) {
+                line.pos.y = gCanvasHeight * 0.15;
+            } else if (idx === 1) {
+                line.pos.y = gCanvasHeight * 0.9;
+            } else {
+                line.pos.y = gCanvasHeight / 2;
+            }
+        });
+        renderMeme();
+    }
 }
 
 function createMeme(selectedImgId) {
+    if (selectedImgId.length === 6) {
+        gMeme = gSavedMemes.find(meme => meme.id === selectedImgId);
+        return;
+    }
+
     gMeme = {
         selectedImgId,
         selectedLineIdx: 0,

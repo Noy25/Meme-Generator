@@ -5,6 +5,8 @@ function onSaveMeme() {
     gMeme.isLineSelected = false;
     renderMeme();
 
+    removeListeners();
+
     const dataURL = gElCanvas.toDataURL();
     saveMeme(dataURL);
     initSavedMemes();
