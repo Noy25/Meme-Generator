@@ -5,6 +5,8 @@ function initSavedMemes() {
     hideEditor();
     showSavedMemes();
     renderSavedMemes();
+    document.querySelector('.main-nav').classList.remove('menu-open');
+    document.querySelector('.main-screen').classList.remove('menu-open');
 }
 
 function onDeleteMeme(memeId) {

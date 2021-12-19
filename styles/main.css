@@ -462,6 +462,12 @@ input[type="color"] {
     position: relative;
 }
 
+@media (max-width: 500px) {
+    .saved-meme:first-child {
+        margin-top: 30px;
+    }
+}
+
 .meme-img {
     display: block;
 }
