@@ -9,7 +9,7 @@ let gCanvasWidth;
 let gCanvasHeight;
 
 function saveMeme(dataURL) {
-    let savedMeme = { src: dataURL , id: getRandomId() };
+    let savedMeme = { src: dataURL, id: getRandomId() };
     gSavedMemes.push(savedMeme);
     saveMemesToStorage();
 }
@@ -105,7 +105,8 @@ function addLine() {
         fill: 'white',
         stroke: 'black',
         pos: { x: gCanvasWidth / 2, y: gCanvasHeight / 2 },
-        isDrag: false
+        isDrag: false,
+        isScale: false
     })
     gMeme.selectedLineIdx = gMeme.lines.length - 1;
 }
@@ -124,6 +125,11 @@ function moveLine(dx, dy) {
     gMeme.lines[gMeme.selectedLineIdx].pos.y += dy;
 }
 
+function scaleLine(dx, dy) {
+    gMeme.lines[gMeme.selectedLineIdx].size += (dx / 2);
+    gMeme.lines[gMeme.selectedLineIdx].size += (dy / 2);
+}
+
 function isLineClicked(pos) {
     return gMeme.lines.findIndex(line => {
         const { xStart, xEnd, yStart, yEnd } = line.boundaries;
@@ -131,9 +137,21 @@ function isLineClicked(pos) {
     });
 }
 
+function isLineScalePointClicked(pos) {
+    return gMeme.lines.findIndex(line => {
+        const { xStart, xEnd, yStart, yEnd } = line.scalingPoint;
+        return ((pos.offsetX >= xStart && pos.offsetX <= xEnd) && (pos.offsetY >= yStart && pos.offsetY <= yEnd));
+    });
+}
+
 function toggleLineIsDrag(shouldDrag) {
     if (gMeme.lines.length === 0) return;
     gMeme.lines[gMeme.selectedLineIdx].isDrag = shouldDrag;
+}
+
+function toggleLineIsScale(shouldScale) {
+    if (gMeme.lines.length === 0) return;
+    gMeme.lines[gMeme.selectedLineIdx].isScale = shouldScale;
 }
 
 function setIsLineSelected(shouldSelect) {
@@ -157,13 +175,26 @@ function setLineBoundaries(metrics, idx) {
     gMeme.lines[idx].boundaries = { xStart, xEnd: xStart + xEnd, yStart, yEnd: yStart + yEnd };
 }
 
+function setLineScalingPoint(metrics, idx) {
+    const { xStart, yStart, xEnd, yEnd } = metrics;
+    let squareSize = 10;
+    // squareSize variable is used to draw a square as a scaling point indicator on the canvas
+    gMeme.lines[idx].scalingPoint = {
+        xStart: xStart + xEnd,
+        xEnd: xStart + xEnd +  squareSize,
+        yStart: yStart + yEnd,
+        yEnd: yStart + yEnd + squareSize,
+        squareSize
+    };
+}
+
 function getLineRectMetrics(idx) {
     const line = gMeme.lines[idx];
     let height = line.size;
     let width = gCtx.measureText(line.txt).width;;
     let yStart = line.pos.y - height;
-    let xEnd = width + 10;
-    let yEnd = height + 10;
+    let xEnd = width + (height / 4);
+    let yEnd = height + (height / 4);
     let xStart;
 
     if (line.align === 'center') xStart = line.pos.x - (width / 2) - 5;
@@ -199,7 +230,8 @@ function createMeme(selectedImgId) {
                 fill: 'white',
                 stroke: 'black',
                 pos: { x: gCanvasWidth / 2, y: gCanvasHeight * 0.15 },
-                isDrag: false
+                isDrag: false,
+                isScale: false
             },
             {
                 txt: 'Enter your text here',
@@ -209,7 +241,8 @@ function createMeme(selectedImgId) {
                 fill: 'white',
                 stroke: 'black',
                 pos: { x: gCanvasWidth / 2, y: gCanvasHeight * 0.9 },
-                isDrag: false
+                isDrag: false,
+                isScale: false
             }
         ]
     }

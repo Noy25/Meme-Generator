@@ -109,9 +109,11 @@ function drawText(lines, meme) {
 
         const metrics = getLineRectMetrics(idx);
         setLineBoundaries(metrics, idx);
+        setLineScalingPoint(metrics, idx);
 
         if (idx === meme.selectedLineIdx && meme.isLineSelected) {
             markSelectedLine(metrics);
+            markSelectedLineScalingPoint(line.scalingPoint);
         };
     });
 
@@ -123,6 +125,16 @@ function markSelectedLine(metrics) {
     gCtx.rect(xStart, yStart, xEnd, yEnd);
     gCtx.lineWidth = 3;
     gCtx.strokeStyle = 'black';
+    gCtx.stroke();
+    gCtx.closePath();
+}
+
+function markSelectedLineScalingPoint(scalingPoint) {
+    const { xStart, yStart, squareSize } = scalingPoint;
+    gCtx.beginPath();
+    gCtx.rect(xStart, yStart, squareSize, squareSize);
+    gCtx.lineWidth = 2;
+    gCtx.strokeStyle = 'white';
     gCtx.stroke();
     gCtx.closePath();
 }
@@ -204,25 +216,39 @@ function addTouchListeners() {
 
 function onDown(ev) {
     const pos = getEvPos(ev);
-    const lineIdx = isLineClicked(pos);
+    let lineIdx = isLineScalePointClicked(pos);
     if (lineIdx < 0) {
-        setIsLineSelected(false);
-        renderMeme();
-        return;
-    };
-    onSwitchLine(lineIdx);
-    toggleLineIsDrag(true);
+        lineIdx = isLineClicked(pos);
+        if (lineIdx < 0) {
+            setIsLineSelected(false);
+            renderMeme();
+            return;
+        } else {
+            // If Line Clicked :
+            onSwitchLine(lineIdx);
+            toggleLineIsDrag(true);
+        }
+        
+    } else {
+        // If Scale Point Clicked :
+        onSwitchLine(lineIdx);
+        toggleLineIsScale(true);
+    }
     gStartPos = pos;
     gElCanvas.style.cursor = 'grabbing';
 }
 
 function onMove(ev) {
     const line = getLine();
-    if (!line || !line.isDrag) return;
+    if (!line || (!line.isDrag && !line.isScale)) return;
     const pos = getEvPos(ev);
     const dx = pos.offsetX - gStartPos.offsetX;
     const dy = pos.offsetY - gStartPos.offsetY;
-    moveLine(dx, dy);
+    if (line.isScale) {
+        scaleLine(dx, dy);
+    } else if (line.isDrag) {
+        moveLine(dx, dy);
+    }
     gStartPos = pos;
     renderMeme();
     gElCanvas.style.cursor = 'grabbing';
@@ -230,6 +256,7 @@ function onMove(ev) {
 
 function onUp() {
     toggleLineIsDrag(false);
+    toggleLineIsScale(false);
     gElCanvas.style.cursor = 'grab'
 }
 

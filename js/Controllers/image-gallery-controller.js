@@ -30,4 +30,4 @@ function renderImages(keyword) {
 function toggleMenu() {
     document.querySelector('.main-nav').classList.toggle('menu-open');
     document.querySelector('.main-screen').classList.toggle('menu-open');
-};
+}

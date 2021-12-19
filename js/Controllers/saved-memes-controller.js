@@ -9,10 +9,12 @@ function initSavedMemes() {
 
 function showSavedMemes() {
     document.querySelector('.saved-memes-container').classList.remove('display-none');
+    document.querySelector('.saved-link').classList.add('focused');
 }
 
 function hideSavedMemes() {
     document.querySelector('.saved-memes-container').classList.add('display-none');
+    document.querySelector('.saved-link').classList.remove('focused');
 }
 
 function renderSavedMemes() {
