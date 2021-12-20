@@ -48,7 +48,7 @@
 
                     <div class="search-bar">
                         <i class="fas fa-search fa-2x"></i>
-                        <input type="text" list="keywords-datalist" class="search-input" placeholder="Search" oninput="renderImages(this.value)">
+                        <input type="text" list="keywords-datalist" class="search-input" placeholder="Search" oninput="renderImages(this.value)" onclick="this.select()">
                         <datalist id="keywords-datalist">
                             <option value="crazy">
                             <option value="funny">
@@ -88,7 +88,7 @@
                 <div class="control-panel flex column align-center">
 
                     <div class="text-bar">
-                        <input type="text" class="text-line-input" oninput="onSetLineTxt(this.value)">
+                        <input type="text" class="text-line-input" oninput="onSetLineTxt(this.value)" onclick="this.select()">
                     </div>
 
                     <div class="control-basics">
